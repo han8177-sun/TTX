@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물건 어디 있지? - Item Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 물건 어디 있지?</h1>
+            <p class="subtitle">잃어버린 물건의 위치를 간단하게 기록하고 찾아보세요.</p>
+        </header>
+
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="무엇을 찾고 계신가요? (예: 안경)">
+                <button id="searchBtn">검색</button>
+            </div>
+        </section>
+
+        <section class="input-section glass">
+            <h2>✨ 새 위치 기록</h2>
+            <form id="itemForm">
+                <div class="input-group">
+                    <label for="itemName">물건 이름</label>
+                    <input type="text" id="itemName" placeholder="예: 자동차 키" required>
+                </div>
+                <div class="input-group">
+                    <label for="itemLocation">발견한 장소</label>
+                    <input type="text" id="itemLocation" placeholder="예: 현관 서랍장 위" required>
+                </div>
+                <button type="submit" class="submit-btn">기록하기</button>
+            </form>
+        </section>
+
+        <section class="list-section">
+            <div class="list-header">
+                <h2>📅 최근 기록</h2>
+                <button id="clearAll" class="text-btn">전체 삭제</button>
+            </div>
+            <div id="itemList" class="item-list">
+                <!-- Items will be injected here -->
+                <div class="empty-state">아직 기록된 물건이 없습니다.</div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
