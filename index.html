@@ -1,54 +1,120 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>물건 어디 있지? - Item Finder</title>
+    <title>루틴-온 (Routine-On) - 중고생 학습 플래너</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>🔍 물건 어디 있지?</h1>
-            <p class="subtitle">잃어버린 물건의 위치를 간단하게 기록하고 찾아보세요.</p>
+
+<body class="light-mode">
+    <div class="app-container">
+        <!-- 상단 네비게이션 & 제어 -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <h1>Routine-On</h1>
+            </div>
+            <div class="view-controls">
+                <button id="dailyBtn" class="view-btn active">Daily</button>
+                <button id="weeklyBtn" class="view-btn">Weekly</button>
+            </div>
+            <div class="mode-toggles">
+                <label class="switch-container">
+                    <span class="switch-label">토요 수업</span>
+                    <input type="checkbox" id="satSchoolToggle">
+                    <span class="slider"></span>
+                </label>
+                <label class="switch-container">
+                    <span class="switch-label">시험 모드</span>
+                    <input type="checkbox" id="examModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </header>
 
-        <section class="search-section">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="무엇을 찾고 계신가요? (예: 안경)">
-                <button id="searchBtn">검색</button>
-            </div>
-        </section>
-
-        <section class="input-section glass">
-            <h2>✨ 새 위치 기록</h2>
-            <form id="itemForm">
-                <div class="input-group">
-                    <label for="itemName">물건 이름</label>
-                    <input type="text" id="itemName" placeholder="예: 자동차 키" required>
+        <!-- 메인 콘텐츠 영역 -->
+        <main class="main-content">
+            <!-- 오늘 집중 목표 -->
+            <section class="goal-section">
+                <div class="goal-card glass" id="mainGoalCard">
+                    <span class="d-day" id="dDayDisplay">D-14 중간고사</span>
+                    <h2 id="mainGoalText">오늘의 목표: 수학 쎈 1단원 완벽 정복! 🔥</h2>
                 </div>
-                <div class="input-group">
-                    <label for="itemLocation">발견한 장소</label>
-                    <input type="text" id="itemLocation" placeholder="예: 현관 서랍장 위" required>
-                </div>
-                <button type="submit" class="submit-btn">기록하기</button>
-            </form>
-        </section>
+            </section>
 
-        <section class="list-section">
-            <div class="list-header">
-                <h2>📅 최근 기록</h2>
-                <button id="clearAll" class="text-btn">전체 삭제</button>
+            <!-- 타임라인 영역 -->
+            <section class="timeline-container" id="timelineContainer">
+                <!-- Daily View Timeline -->
+                <div id="dailyTimeline" class="daily-timeline">
+                    <!-- Hours and Blocks will be injected here -->
+                </div>
+
+                <!-- Weekly View Table (Hidden by default) -->
+                <div id="weeklyTimeline" class="weekly-timeline hidden">
+                    <div class="weekly-grid">
+                        <div class="grid-header">
+                            <div>Mon</div>
+                            <div>Tue</div>
+                            <div>Wed</div>
+                            <div>Thu</div>
+                            <div>Fri</div>
+                            <div class="sat-col">Sat</div>
+                        </div>
+                        <div class="grid-content" id="weeklyGrid">
+                            <!-- Weekly columns will be injected here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 자습 요약 위젯 (주간 뷰용) -->
+        <aside class="summary-widget hidden" id="summaryWidget">
+            <h3>주간 자습 요약</h3>
+            <div class="summary-stat">
+                <span class="stat-label">총 자습 시간</span>
+                <span class="stat-value" id="totalSelfStudyTime">0h</span>
             </div>
-            <div id="itemList" class="item-list">
-                <!-- Items will be injected here -->
-                <div class="empty-state">아직 기록된 물건이 없습니다.</div>
+        </aside>
+
+        <!-- 일정 추가 모달 (간소화) -->
+        <div id="addModal" class="modal hidden">
+            <div class="modal-content glass">
+                <h3>일정 추가</h3>
+                <form id="scheduleForm">
+                    <input type="text" id="schTitle" placeholder="일정 명칭 (예: 수학 학원)" required>
+                    <div class="time-inputs">
+                        <input type="time" id="schStart" required>
+                        <span>~</span>
+                        <input type="time" id="schEnd" required>
+                    </div>
+                    <select id="schType">
+                        <option value="REGULAR">학교 정과수업</option>
+                        <option value="ACADEMY">학원</option>
+                        <option value="SELF">자습</option>
+                    </select>
+                    <div class="transit-inputs" id="transitFields">
+                        <input type="number" id="transitPrev" placeholder="이동(전) 분" min="0">
+                        <input type="number" id="transitNext" placeholder="이동(후) 분" min="0">
+                    </div>
+                    <div class="modal-btns">
+                        <button type="button" id="closeModal">취소</button>
+                        <button type="submit" class="submit-btn">추가하기</button>
+                    </div>
+                </form>
             </div>
-        </section>
+        </div>
+
+        <button class="fab" id="openAddModal">+</button>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
